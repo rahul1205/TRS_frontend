@@ -3,14 +3,11 @@ import mysql.connector
 import requests
 import random
 from flask import Flask, render_template, session, request, redirect, url_for
-from flask_material import Material
 
 url_api = "http://localhost:8000/apiv1"
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-Material(app)
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
