@@ -1,0 +1,32 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "trsfrontend",
+      "image": "canadatrs/trs_frontend:latest",
+      "essential": true,
+      "memoryReservation": 256,
+      "portMappings": [
+        {
+          "hostPort": 5000,
+          "containerPort": 5000
+        }
+      ]
+	}, 
+	{	  
+      "name": "trsfrontend1",
+      "image": "candatrs/trs_frontend:latest",
+      "essential": true,
+      "memoryReservation": 256,
+      "portMappings": [
+        {
+          "hostPort": 8001,
+          "containerPort": 8001
+        }
+      ],
+      "links": [
+        "trs"
+      ]	  
+    }
+  ]
+}

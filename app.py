@@ -4,7 +4,7 @@ import requests
 import random
 from flask import Flask, render_template, session, request, redirect, url_for
 
-url_api = "http://localhost:8000/apiv1"
+url_api = "http://tourismtrs.us-east-1.elasticbeanstalk.com:8000/apiv1"
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
