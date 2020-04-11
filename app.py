@@ -62,7 +62,9 @@ def authentication():
         otp = request.form.get('otp')
         authenticate_api = url_api + "/login-final/"
         r = requests.post(authenticate_api, {"username":username, "otp":otp})
+
         # print (r.status_code, str(r.content, 'utf-8'))
+
         if r.status_code ==   200:
             session['token'] = str(r.content)
             return redirect(url_for('dashboard'), code=307)
@@ -91,10 +93,10 @@ def search():
         keyword = request.form.get("keyword", '')
         print (keyword)
         if keyword:
-            destinations = requests.get("http://localhost:5001/destinations?keyword=" + str(keyword))
+            destinations = requests.get("http://trsdestinations.us-east-1.elasticbeanstalk.com/destinations?keyword=" + str(keyword))
             # print (destinations.json())
         else:
-            destinations = requests.get("http://localhost:5001/destinations")
+            destinations = requests.get("http://trsdestinations.us-east-1.elasticbeanstalk.com/destinations")
         return render_template('search.html', ctx=destinations.json())
     return render_template('search.html')
 
@@ -105,7 +107,7 @@ def placedetail():
     if not idn:
         return redirect(url_for('search'))
 
-    destinations = requests.get("http://localhost:5001/destination_by_id?id=" + str(idn))
+    destinations = requests.get("http://trsdestinations.us-east-1.elasticbeanstalk.com/destination_by_id?id=" + str(idn))
     return render_template('placedetail.html', desc=destinations.json()[0] )
 
 
@@ -141,5 +143,5 @@ def bookticket():
     idn = request.args.get('keyword', '')
     if not idn:
         return redirect(url_for('search'))
-    destinations = requests.get("http://localhost:5001/destination_by_id?id=" + str(idn))
+    destinations = requests.get("http://trsdestinations.us-east-1.elasticbeanstalk.com/destination_by_id?id=" + str(idn))
     return render_template('ticketbooking.html', destination=destinations.json()[0][1], username=session['user'])
