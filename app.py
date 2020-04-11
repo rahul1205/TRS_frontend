@@ -18,7 +18,8 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
-    if password == confirm_password:
+        if not password == confirm_password:
+            return render_template('signup.html', error="Passwords mismatch")
         register_api = url_api + "/register/"
         r = requests.post(register_api, {"first_name":first_name, "last_name":last_name, "username":username, "password":password, "email":email})
         if r.status_code ==   200:
@@ -61,9 +62,9 @@ def authentication():
         otp = request.form.get('otp')
         authenticate_api = url_api + "/login-final/"
         r = requests.post(authenticate_api, {"username":username, "otp":otp})
-        print (r.status_code, str(r.content, 'utf-8'))
+        # print (r.status_code, str(r.content, 'utf-8'))
         if r.status_code ==   200:
-            session['token'] = str(r.content, 'utf-8')
+            session['token'] = str(r.content)
             return redirect(url_for('dashboard'), code=307)
         if r.status_code == 400:
             return render_template('authentication.html', error="Invalid OTP")
